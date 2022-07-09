@@ -11,15 +11,16 @@
     >
       Добавление товара
     </h1>
-    <select>
-      <option>По Цене Min</option>
-      <option>По Цене Max</option>
-      <option>По Наименованию</option>
+    <select v-model="selected">
+      <option value="По Умолчанию" selected="selected">По Умолчанию</option>
+      <option value="title">По Наименованию</option>
+      <option value="min">По Цене Min</option>
+      <option value="max">По Цене Max</option>
     </select>
   </div>
   <div class="Frame">
     <InputFields @create="addCard" />
-    <CardsList :Cards="Cards" @remove="removeCard" />
+    <CardsList :Cards="sortedList" @remove="removeCard" />
   </div>
 </template>
 
@@ -36,6 +37,7 @@ export default {
 },
   data() {
     return {
+      selected: "По Умолчанию",
       Cards: [
         {
           id: 1,
@@ -61,8 +63,17 @@ export default {
       ],
     };
   },
-    mounted() {
-    
+  computed:{
+    sortedList () {
+        switch(this.selected){
+            case 'title': return this.Cards.slice().sort(sortByTitle);
+            case 'min': return this.Cards.slice().sort(sortByMinPrice);
+            case 'max': return this.Cards.slice().sort(sortByMaxPrice);
+            default: return this.Cards;
+        }
+    }
+  },
+  mounted() {
     if(localStorage.getItem('cards')) {
       try {
         this.Cards = JSON.parse(localStorage.getItem('cards'));
@@ -86,6 +97,9 @@ export default {
     }
   },
 };
+  const sortByTitle = (card1, card2) => card1.title.toLowerCase() > card2.title.toLowerCase() ? 1 : -1;
+  const sortByMinPrice = (card1, card2) => +card1.price > +card2.price ? 1 : -1;
+  const sortByMaxPrice = (card1, card2) => +card1.price < +card2.price ? 1 : -1;
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -97,14 +111,18 @@ body {
 .Frame {
   display: flex;
   justify-content: flex-start;
-  margin: 20px 20px 0 20px;
+  padding: 20px 20px 0 20px;
   height: 100%;
+  flex-grow: 1;
+  
+  background: rgba(235, 235, 235, 0.8);
 }
 
 .head {
   display: flex;
   justify-content: space-between;
   align-items: center;
+    background: rgba(235, 235, 235, 0.8);
 }
 
 .head select {

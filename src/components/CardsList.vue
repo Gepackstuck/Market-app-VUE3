@@ -8,7 +8,7 @@
       <p>
         {{ card.desc }}
       </p>
-      <h1>{{ card.price }} руб.</h1>
+      <h1>{{ priceMask(card.price) }} руб.</h1>
       <button @click="$emit('remove', card)">Удалить</button>
     </div>
   </div>
@@ -22,6 +22,11 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  methods: {
+    priceMask(price) {
+      return new Intl.NumberFormat('ru-RU').format(price);
+    }
   },
   name: "CardsList",
 };

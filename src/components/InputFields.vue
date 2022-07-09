@@ -33,16 +33,17 @@
       placeholder="Введите цену"
       required
     />
-    <button :disabled="!this.cards.title && !this.cards.desc && !this.cards.price" class="addbtn" @click="addCard">Добавить товар</button>
+    <button :disabled="disabledButton()" class="addbtn" @click="addCard">Добавить товар</button>
   </form>
 </template>
 
 <script>
+
 export default {
   name: "InputFields",
   data() {
     return {
-      cards: {
+        cards: {
         title: "",
         desc: "",
         price: "",
@@ -50,8 +51,11 @@ export default {
     };
   },
   methods: {
+    disabledButton() {
+      return !this.cards.title || !this.cards.desc || !this.cards.price
+    },
     addCard() {
-      if (this.cards.title && this.cards.desc && this.cards.price) {
+      if (this.cards.title || this.cards.desc || this.cards.price) {
         this.cards.id = Date.now();
         this.$emit("create", this.cards);
         this.cards = {
