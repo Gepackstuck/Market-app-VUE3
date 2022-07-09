@@ -33,7 +33,7 @@
       placeholder="Введите цену"
       required
     />
-    <button class="addbtn" @click="addCard">Добавить товар</button>
+    <button :disabled="!this.cards.title && !this.cards.desc && !this.cards.price" class="addbtn" @click="addCard">Добавить товар</button>
   </form>
 </template>
 
@@ -58,7 +58,7 @@ export default {
           title: "",
           desc: "",
           price: "",
-        };
+        }
       }
     },
   },
@@ -99,6 +99,30 @@ export default {
   height: 36px;
   left: 56px;
   top: 463px;
+  background: #7BAE73;
+  border-radius: 10px;
+  margin: 20px;
+  border: none;
+  margin-top: 0px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+}
+
+.addbtn:hover {
+  cursor: pointer;
+}
+
+.addbtn:disabled {
+  width: 284px;
+  height: 36px;
+  left: 56px;
+  top: 463px;
   background: #EEEEEE;
   border-radius: 10px;
   margin: 20px;
@@ -114,7 +138,7 @@ export default {
   color: #B4B4B4;
 }
 
-.addbtn:hover {
+.addbtn:disabled:hover {
   cursor: not-allowed;
 }
 

@@ -1,4 +1,5 @@
 <template >
+<PreloaderScreen/>
   <div class="head">
     <h1
       style="
@@ -25,12 +26,14 @@
 <script>
 import InputFields from "./InputFields.vue";
 import CardsList from "./CardsList.vue";
+import PreloaderScreen from "./PreloaderScreen.vue";
 export default {
   name: "MarketBody",
   components: {
     InputFields,
     CardsList,
-  },
+    PreloaderScreen
+},
   data() {
     return {
       Cards: [
@@ -87,6 +90,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import url("//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic");
 body {
   margin: 0;
 }
