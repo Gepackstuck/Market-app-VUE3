@@ -12,6 +12,7 @@
       <button @click="$emit('remove', card)">Удалить</button>
     </div>
   </div>
+  
 </template>
 
 <script>

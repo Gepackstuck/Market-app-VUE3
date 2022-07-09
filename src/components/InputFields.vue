@@ -1,5 +1,5 @@
 <template>
-  <div class="InputFields">
+  <form @submit.prevent="addCard" class="InputFields">
     <p>Наименование товара</p>
     <input
       v-bind:value="cards.title"
@@ -26,6 +26,7 @@
     />
     <p>Цена товара</p>
     <input
+    type="number"
       v-bind:value="cards.price"
       @input="cards.price = $event.target.value"
       class="leftInput"
@@ -33,7 +34,7 @@
       required
     />
     <button class="addbtn" @click="addCard">Добавить товар</button>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -50,7 +51,7 @@ export default {
   },
   methods: {
     addCard() {
-      if (this.title !== "" || this.desc !== "" || this.price !== "") {
+      if (this.cards.title && this.cards.desc && this.cards.price) {
         this.cards.id = Date.now();
         this.$emit("create", this.cards);
         this.cards = {

@@ -58,13 +58,29 @@ export default {
       ],
     };
   },
+    mounted() {
+    
+    if(localStorage.getItem('cards')) {
+      try {
+        this.Cards = JSON.parse(localStorage.getItem('cards'));
+      } catch(e) {
+        localStorage.removeItem('cards');
+      }
+    }
+  },
   methods: {
     addCard(cards) {
       this.Cards.push(cards);
+      this.saveCards();
     },
     removeCard(card) {
       this.Cards = this.Cards.filter((p) => p.id !== card.id);
+      this.saveCards();
     },
+    saveCards() {
+      let parsed = JSON.stringify(this.Cards);
+      localStorage.setItem('cards', parsed);
+    }
   },
 };
 </script>
