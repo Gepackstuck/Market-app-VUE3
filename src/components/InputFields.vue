@@ -1,4 +1,5 @@
 <template>
+<div class="InputWrapper">
   <form @submit.prevent="addCard" class="InputFields">
     <p>Наименование товара</p>
     <input
@@ -35,6 +36,7 @@
     />
     <button :disabled="disabledButton()" class="addbtn" @click="addCard">Добавить товар</button>
   </form>
+  </div>
 </template>
 
 <script>
@@ -43,7 +45,7 @@ export default {
   name: "InputFields",
   data() {
     return {
-        cards: {
+      cards: {
         title: "",
         desc: "",
         price: "",
@@ -70,6 +72,11 @@ export default {
 </script>
 
 <style>
+.InputWrapper {
+  width: 330px;
+  padding: 20px;
+}
+
 .InputFields {
   display: flex;
   flex-direction: column;
@@ -83,6 +90,7 @@ export default {
     0px 6px 10px rgba(0, 0, 0, 0.02);
   border-radius: 4px;
   padding-top: 16px;
+
 }
 
 .InputFields p {

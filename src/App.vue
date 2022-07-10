@@ -19,14 +19,21 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
   color: #2c3e50;
-  /* background: rgba(235, 235, 235, 0.8); */
   margin: 0;
   height: 100%;
 display: flex;
 flex-direction: column;
 }
+html {
+  margin: 0;
+  height: 100%;
+  background: rgba(235, 235, 235, 0.8);
+  width: 100%;
+}
 body {
   margin: 0;
   height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 </style>

@@ -1,14 +1,7 @@
 <template >
-<PreloaderScreen/>
+  <PreloaderScreen/>
   <div class="head">
-    <h1
-      style="
-        text-align: left;
-        margin: 0 20px;
-        font-family: 'Source Sans Pro';
-        font-style: normal;
-      "
-    >
+    <h1>
       Добавление товара
     </h1>
     <select v-model="selected">
@@ -21,6 +14,11 @@
   <div class="Frame">
     <InputFields @create="addCard" />
     <CardsList :Cards="sortedList" @remove="removeCard" />
+  <transition name="fade">
+    <div v-if="show" class="node">
+      <p><strong>{{this.massage}}</strong></p>
+    </div>
+  </transition>
   </div>
 </template>
 
@@ -33,10 +31,12 @@ export default {
   components: {
     InputFields,
     CardsList,
-    PreloaderScreen
+    PreloaderScreen,
 },
   data() {
     return {
+      massage: null,
+      show: false,
       selected: "По Умолчанию",
       Cards: [
         {
@@ -44,21 +44,21 @@ export default {
           title: "Наименование товара",
           desc:
             "Довольно-таки интересное описание товара в несколько строк. Довольно-таки интересное описание товара в несколько строк",
-          price: "10 000",
+          price: "100000",
         },
         {
           id: 2,
           title: "Наименование товара 2",
           desc:
             "Довольно-таки интересное описание товара в несколько строк. Довольно-таки интересное описание товара в несколько строк",
-          price: "10 582",
+          price: "10582",
         },
         {
           id: 3,
           title: "Наименование товара 3",
           desc:
             "Довольно-таки интересное описание товара в несколько строк. Довольно-таки интересное описание товара в несколько строк",
-          price: "10 313",
+          price: "9989",
         },
       ],
     };
@@ -84,17 +84,28 @@ export default {
   },
   methods: {
     addCard(cards) {
-      this.Cards.push(cards);
-      this.saveCards();
+      this.Cards.push(cards)
+      this.saveCards()
+      this.show = true
+      this.showToggle()
+      this.massage = "Товар добавлен!"
     },
     removeCard(card) {
       this.Cards = this.Cards.filter((p) => p.id !== card.id);
       this.saveCards();
+      this.show = true
+      this.showToggle()
+      this.massage = "Товар Удален!"
     },
     saveCards() {
       let parsed = JSON.stringify(this.Cards);
       localStorage.setItem('cards', parsed);
-    }
+    },
+    showToggle(){
+			setTimeout(() => {
+				this.show = false
+			}, 2500)
+		}
   },
 };
   const sortByTitle = (card1, card2) => card1.title.toLowerCase() > card2.title.toLowerCase() ? 1 : -1;
@@ -105,29 +116,30 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import url("//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic");
-body {
-  margin: 0;
-}
 .Frame {
   display: flex;
   justify-content: flex-start;
-  padding: 20px 20px 0 20px;
   height: 100%;
   flex-grow: 1;
-  
-  background: rgba(235, 235, 235, 0.8);
 }
 
 .head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-    background: rgba(235, 235, 235, 0.8);
+  margin-bottom: 10px;
+}
+
+.head h1 {
+  text-align: left;
+  margin: 0 20px;
+  font-family: 'Source Sans Pro';
+  font-style: normal;
 }
 
 .head select {
   margin-right: 40px;
-  margin-top: 20px;
+  margin-top: 10px;
   width: 120;
   height: 36px;
   left: 1287px;
@@ -147,5 +159,34 @@ body {
 .head select:focus {
   transform: scale(1.02);
   outline: none;
+}
+
+.node {
+font-family: 'Source Sans Pro';
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: absolute;
+	width: 130px;
+	height: 50px;
+	z-index: 9999;
+  justify-content: center;
+  bottom: 30px;
+  right: 40px;
+  background: #7BAE73;
+  border-radius: 10px;
+}
+
+.node p {
+  color: #FFFFFF;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.fade-leave-active {
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
 }
 </style>

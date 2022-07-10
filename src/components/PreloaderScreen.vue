@@ -30,6 +30,7 @@ export default {
 <style>
 
 .preloader {
+	font-family: 'Source Sans Pro';
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -39,6 +40,13 @@ export default {
 	height: 100%;
 	background-color: white;
 	z-index: 9999;
+}
+.fade-leave-active {
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.fade-leave-to {
+  transform: translateX(30px);
+  opacity: 0;
 }
 .h1 {
   font-family: "Source Sans Pro";
